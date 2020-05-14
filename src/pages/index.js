@@ -5,44 +5,58 @@ import SEO from "../components/seo"
 
 import useInterval from "../hooks/useInterval"
 
-// Ref: https://stackoverflow.com/a/43048463/5046074
-const DUT = () => {
-  const now = new Date();
-  const dut = new Date(+now - now.getTimezoneOffset() + 3600000).toISOString().split(".")[0];
-
-  return <h1>{dut}</h1>;
-}
+import add from "date-fns/add"
+import format from "date-fns/format"
 
 // Ref: https://overreacted.io/making-setinterval-declarative-with-react-hooks/
-function Counter() {
-  let [count, setCount] = useState(0);
+const Counter = () => {
+  const [count, setCount] = useState(0)
 
   useInterval(() => {
-    setCount(count + 1);
-  }, 1000);
+    setCount(count + 1)
+  }, 1000)
 
-  return <h1>{count}</h1>;
+  return <h1>{count}</h1>
 }
 
-
 const IndexPage = () => {
-  //Ref: https://www.gatsbyjs.org/docs/data-fetching/#fetching-data-at-client-side-runtime
-  const [starsCount, setStarsCount] = useState(0)
+  const dateFormat = "dd/MM/yy hh:mm:ss aa"
+  const now = format(new Date(), dateFormat)
+  const [dut, setDut] = useState()
+  const [localTime, setLocalTime] = useState(now)
+
   useEffect(() => {
-    fetch(`http://worldtimeapi.org/api/timezone/Europe/Paris`)
-      .then(response => response.json())
-      .then(resultData => {
-        setStarsCount(resultData["utc_offset"])
-      })
+    async function getTimezone() {
+      try {
+        const res = await fetch(
+          `http://worldtimeapi.org/api/timezone/Europe/Paris`
+        )
+        const data = await res.json()
+        const utcOffset = data["utc_offset"]
+
+        // CONTINUE HERE
+        console.log(utcOffset)
+        let dut = add(new Date(), utcOffset.slice(1, 3))
+        console.log(dut)
+        dut = format(new Date(dut), dateFormat)
+
+        setDut(dut)
+      } catch (err) {
+        console.log("🚫 Error:\n\n", err)
+      }
+    }
+
+    getTimezone()
   }, [])
 
-  return (<Layout>
-    <SEO title="Home" />
-    <DUT />
-    <Counter />
-    <p>Dofus time: {starsCount}</p>
-    <p>Your current time:</p>
-  </Layout>)
+  return (
+    <Layout>
+      <SEO title="Dofus Almanax UI" />
+      <Counter />
+      <p>Dofus Universal Time (DUT): {dut}</p>
+      <p>Your local time: {localTime}</p>
+    </Layout>
+  )
 }
 
 export default IndexPage

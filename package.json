@@ -1,9 +1,9 @@
 {
-  "name": "gatsby-starter-default",
+  "name": "dofus-almanax-ui",
   "private": true,
-  "description": "A simple starter to get up and developing quickly with Gatsby",
+  "description": "An improved UI & UX to check for the Dofus Almanax quest items.",
   "version": "0.1.0",
-  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "author": "Felipe Maia <dev.fmaiabatista@gmail.com>",
   "dependencies": {
     "date-fns": "^2.13.0",
     "gatsby": "^2.21.22",
@@ -20,6 +20,9 @@
     "react-helmet": "^6.0.0"
   },
   "devDependencies": {
+    "eslint": "^7.0.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-prettier": "^3.1.3",
     "prettier": "2.0.5"
   },
   "keywords": [
@@ -37,9 +40,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/gatsbyjs/gatsby-starter-default"
+    "url": "https://github.com/fmaiabatista/dofus-almanax-ui"
   },
   "bugs": {
-    "url": "https://github.com/gatsbyjs/gatsby/issues"
+    "url": "https://github.com/fmaiabatista/dofus-almanax-ui/issues"
   }
 }

@@ -5,9 +5,6 @@ import SEO from "../components/seo"
 
 import useInterval from "../hooks/useInterval"
 
-import add from "date-fns/add"
-import format from "date-fns/format"
-
 // Ref: https://overreacted.io/making-setinterval-declarative-with-react-hooks/
 const Counter = () => {
   const [count, setCount] = useState(0)
@@ -20,10 +17,8 @@ const Counter = () => {
 }
 
 const IndexPage = () => {
-  const dateFormat = "dd/MM/yy hh:mm:ss aa"
-  const now = format(new Date(), dateFormat)
   const [dut, setDut] = useState()
-  const [localTime, setLocalTime] = useState(now)
+  const [localTime, setLocalTime] = useState(new Date().toLocaleString())
 
   useEffect(() => {
     async function getTimezone() {
@@ -31,14 +26,10 @@ const IndexPage = () => {
         const res = await fetch(
           `http://worldtimeapi.org/api/timezone/Europe/Paris`
         )
-        const data = await res.json()
-        const utcOffset = data["utc_offset"]
 
-        // CONTINUE HERE
-        console.log(utcOffset)
-        let dut = add(new Date(), utcOffset.slice(1, 3))
-        console.log(dut)
-        dut = format(new Date(dut), dateFormat)
+        const data = await res.json()
+        const paris = new Date(data["datetime"].split(".")[0])
+        const dut = paris.toLocaleString()
 
         setDut(dut)
       } catch (err) {
@@ -53,8 +44,18 @@ const IndexPage = () => {
     <Layout>
       <SEO title="Dofus Almanax UI" />
       <Counter />
-      <p>Dofus Universal Time (DUT): {dut}</p>
-      <p>Your local time: {localTime}</p>
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(2, max-content)",
+          columnGap: "6px",
+        }}
+      >
+        <label for="dofus-universal-time">Dofus Universal Time:</label>
+        <span id="dofus-universal-time">{dut}</span>
+        <label for="user-current-time">Your local time:</label>
+        <span id="user-current-time">{localTime}</span>
+      </div>
     </Layout>
   )
 }

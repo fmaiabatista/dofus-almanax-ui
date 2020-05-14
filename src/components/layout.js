@@ -28,16 +28,19 @@ const Layout = ({ children }) => {
       <Header siteTitle={data.site.siteMetadata.title} />
       <div
         style={{
-          margin: `0 auto`,
+          margin: `calc(2.45rem + 1.45rem + 1.45rem) auto 0`,
+          // 100vh - h1 - header padding top - header padding bottom
           maxWidth: 960,
           padding: `0 1.0875rem 1.45rem`,
+          display: "flex",
+          flexDirection: "column",
         }}
       >
-        <main>{children}</main>
+        <main style={{ flex: 1, marginTop: "1rem" }}>{children}</main>
         <footer>
-          © {new Date().getFullYear()}, Built with
-          {` `}
-          <a href="https://www.gatsbyjs.org">Gatsby</a>
+          {new Date().getFullYear()} &middot; Code by{" "}
+          <a href="https://github.com/fmaiabatista">@fmaiabatista</a> &middot;
+          Proudly using <a href="https://www.gatsbyjs.org">Gatsby</a>
         </footer>
       </div>
     </>

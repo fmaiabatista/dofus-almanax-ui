@@ -1,0 +1,6 @@
+- fix height of multiline elements & improve card appearance
+- treat edge cases (1st Jan and 31st Dec)
+- style buttons
+- add ticking seconds to DUT and local dates
+- improve color palette
+- add light & dark theming

@@ -1,0 +1,208 @@
+.card {
+  background: white;
+  border-radius: 12px;
+  padding: 12px;
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 230px;
+  width: 230px;
+  height: 230px;
+  cursor: pointer;
+  transition: 0.2s;
+  transform: scale(1);
+}
+
+.card:hover {
+  transform: scale(1.1);
+}
+
+.c2 {
+  transform: scale(1.25);
+}
+
+.c2:hover {
+  transform: scale(1.35);
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-around;
+  font-size: 0.7em;
+  color: #11111190;
+}
+
+.overlay {
+  opacity: 0;
+  height: 100%;
+  width: 100%;
+  background: #11111115;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 12px;
+  transition: 0.2s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card:hover .overlay {
+  opacity: 1;
+}
+
+.card > :not(.overlay) {
+  opacity: 1;
+  transition: 0.2s;
+}
+
+.card:hover > :not(.overlay) {
+  opacity: 0.2;
+}
+
+.c1 {
+  position: absolute;
+}
+
+.c3 {
+  right: 0;
+  position: absolute;
+  z-index: 1;
+}
+
+/* CAROUSEL SYSTEM */
+
+/*
+
+Gallery is set to width: 900px
+
+Normal card: 230 x 230
+Normal card hovered: 253 x 253
+
+Main card: 287.5 x 287.5
+Main card hovered: 310.5 x 310.5
+
+Gaps: 153 (900 - 230 - 287 - 230)
+
+TranslateX will be calculated approximately by:
+326px = 230 + 153 - 57 (normal card + gap - increase from scale)
+
+*/
+
+/* Left classes */
+
+.c2-c1 {
+  animation: c2-c1 0.4s ease-in-out both;
+}
+
+.c3-c2 {
+  animation: c3-c2 0.4s ease-in-out both;
+}
+
+/* Left animations */
+
+@keyframes c2-c1 {
+  0% {
+    transform: translateX(0px) scale(1.25);
+  }
+
+  100% {
+    transform: translateX(-335px) scale(1);
+  }
+}
+
+@keyframes c3-c2 {
+  0% {
+    transform: translateX(0px) scale(1);
+  }
+
+  100% {
+    transform: translateX(-335px) scale(1.25);
+  }
+}
+
+/* Right classes */
+
+.c1-c2 {
+  animation: c1-c2 0.4s ease-in-out both;
+}
+
+.c2-c3 {
+  animation: c2-c3 0.4s ease-in-out both;
+}
+
+/* Right animations */
+
+@keyframes c1-c2 {
+  0% {
+    transform: translateX(0px) scale(1);
+  }
+
+  100% {
+    transform: translateX(335px) scale(1.25);
+  }
+}
+
+@keyframes c2-c3 {
+  0% {
+    transform: translateX(0px) scale(1.25);
+  }
+
+  100% {
+    transform: translateX(335px) scale(1);
+  }
+}
+
+/* Fade classes */
+
+.fade-in {
+  animation: fade-in 0.4s 0.1s ease-out both;
+}
+
+.fade-out {
+  animation: fade-out 0.4s ease-out both;
+}
+
+/* Fade animations */
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.25);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.25);
+  }
+}
+
+/* Other */
+
+.hidden {
+  opacity: 0;
+  transition: 0s;
+}

@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react"
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
+import Gallery from "../components/gallery"
+
+import getDayOfYear from "date-fns/getDayOfYear"
 
 import useInterval from "../hooks/useInterval"
 
@@ -17,7 +20,8 @@ const Counter = () => {
 }
 
 const IndexPage = () => {
-  const [dut, setDut] = useState()
+  const lang = "en-us"
+  const [dut, setDut] = useState("Loading...")
   const [localTime, setLocalTime] = useState(new Date().toLocaleString())
 
   useEffect(() => {
@@ -56,6 +60,7 @@ const IndexPage = () => {
         <label for="user-current-time">Your local time:</label>
         <span id="user-current-time">{localTime}</span>
       </div>
+      <Gallery startIndex={getDayOfYear(new Date())} lang={lang} />
     </Layout>
   )
 }

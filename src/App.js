@@ -6,38 +6,38 @@ import itemImage from './assets/65759.w75h75.png';
 import logoWebp from './assets/dofus64.webp';
 import logoPng from './assets/dofus64.png';
 import { usePalette } from 'react-palette';
-// import almanax from './data/almanax.json';
+import format from 'date-fns/format';
+import getDayOfYear from 'date-fns/getDayOfYear';
+import almanax from './data/almanax.json';
 
 function App() {
   const today = new Date();
-  const [currentDay, setCurrentDay] = useState(today);
-  const [isToday, setIsToday] = useState(currentDay === today);
-  const toggleToday = () => setIsToday(!isToday);
+  let todaysIndex = getDayOfYear(today) - 1;
+  const [currentIndex/*, setCurrentIndex*/] = useState(todaysIndex);
   const { data: palette } = usePalette(itemImage);
-  console.log(setCurrentDay);
 
   return (
     <div className="App" style={{ background: `linear-gradient(45deg, ${palette.vibrant}, ${palette.vibrant + '00'})` }}>
       <header className="App-header">
         <div className="App-header-logo">
           <picture>
-            <source width="32px" srcset={logoWebp} type="image/webp" />
+            <source width="32px" srcSet={logoWebp} type="image/webp" />
             <img width="32px" src={logoPng} alt="emerald dofus" />
           </picture>
           <span>Dofus Almanax UI</span>
         </div>
         <div className="App-header-time">
-          <span>{today.toDateString()}</span>
+          <span>{format(today, 'MMM dd yyyy')}</span>
           <Info className="hover-grow" />
         </div>
       </header>
       <main className="App-main">
         <img className="App-main-image" src={itemImage} alt="itemImageAlt" />
-        <Card darkVibrant={palette.darkVibrant} />
+        <Card item={almanax.content[currentIndex]} darkVibrant={palette.darkVibrant} />
       </main>
       <footer className="App-footer">
         <svg
-          onClick={toggleToday}
+          // onClick={}
           className="hover-grow pointer"
           width="40"
           height="16"
@@ -47,18 +47,18 @@ function App() {
         >
           <path fillRule="evenodd" clipRule="evenodd" d="M18 10.5L40 10.5V5.5L18 5.5L18 0L0 8L18 16V10.5Z" fill={palette.darkVibrant} />
         </svg>
-        {isToday && (
-          <svg width="21" height="26" viewBox="0 0 21 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+        {currentIndex !== todaysIndex && (
+          <svg className="hover-grow pointer" width="26" height="33" viewBox="0 0 26 33" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              d="M3.8147e-06 15.6V14.3H2.6V15.6C2.6 19.9017 6.0983 23.4 10.4 23.4C14.7017 23.4 18.2 19.9017 18.2 15.6C18.2 11.2983 14.7017 7.8 10.4 7.8L9.1 7.8V13L2.6 6.5L9.1 0L9.1 5.2L10.4 5.2C16.1343 5.2 20.8 9.8657 20.8 15.6C20.8 21.3343 16.1343 26 10.4 26C4.6657 26 3.8147e-06 21.3343 3.8147e-06 15.6Z"
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M3.8147e-06 19.5V17.875H3.25V19.5C3.25 24.8771 7.62288 29.25 13 29.25C18.3771 29.25 22.75 24.8771 22.75 19.5C22.75 14.1229 18.3771 9.75 13 9.75L11.375 9.75L11.375 16.25L3.25 8.125L11.375 0L11.375 6.5H13C20.1679 6.5 26 12.3321 26 19.5C26 26.6679 20.1679 32.5 13 32.5C5.83213 32.5 3.8147e-06 26.6679 3.8147e-06 19.5Z"
               fill={palette.darkVibrant}
             />
           </svg>
         )}
         <svg
-          onClick={toggleToday}
+          // onClick={}
           className="hover-grow pointer"
           width="40"
           height="16"

@@ -1,11 +1,15 @@
 @import-normalize;
 
+html,
+body {
+  height: 100%;
+}
+
 body {
   margin: 0;
   font-family: 'Hind', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  height: calc(100vh - 64px);
 }
 
 #root {

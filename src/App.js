@@ -19,11 +19,13 @@ function App() {
   return (
     <div className="App" style={{ background: `linear-gradient(45deg, ${palette.vibrant}, ${palette.vibrant + '00'})` }}>
       <header className="App-header">
-        <picture>
-          <source width="32px" srcset={logoWebp} type="image/webp" />
-          <img width="32px" src={logoPng} alt="emerald dofus" />
-        </picture>
-        {/* <span>Dofus Almanax UI</span> */}
+        <div className="App-header-logo">
+          <picture>
+            <source width="32px" srcset={logoWebp} type="image/webp" />
+            <img width="32px" src={logoPng} alt="emerald dofus" />
+          </picture>
+          <span>Dofus Almanax UI</span>
+        </div>
         <div className="App-header-time">
           <span>{today.toDateString()}</span>
           <Info className="hover-grow" />

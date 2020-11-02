@@ -1,8 +1,0 @@
-.gallery {
-  background-color: pink;
-  display: flex;
-  justify-content: space-between;
-  margin: 60px auto;
-  width: 900px;
-  position: relative;
-}

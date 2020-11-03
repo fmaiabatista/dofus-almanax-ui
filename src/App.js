@@ -1,20 +1,35 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 import Card from './Card';
 import { ReactComponent as Info } from './assets/info.svg';
-import itemImage from './assets/65759.w75h75.png';
 import logoWebp from './assets/dofus64.webp';
 import logoPng from './assets/dofus64.png';
 import { usePalette } from 'react-palette';
 import format from 'date-fns/format';
 import getDayOfYear from 'date-fns/getDayOfYear';
 import almanax from './data/almanax.json';
+import almanaxImages from './data/almanaxB64.json';
 
 function App() {
   const today = new Date();
   let todaysIndex = getDayOfYear(today) - 1;
-  const [currentIndex/*, setCurrentIndex*/] = useState(todaysIndex);
-  const { data: palette } = usePalette(itemImage);
+  const [currentIndex, setCurrentIndex] = useState(todaysIndex);
+  const [currentImageSrc, setCurrentImageSrc] = useState(
+    `data:image/jpeg;base64,${almanaxImages.content[currentIndex][almanax.content[currentIndex].date]}`,
+  );
+  const { data: palette } = usePalette(currentImageSrc);
+
+  const navigate = (step) => {
+    if (step === 0) {
+      setCurrentIndex(todaysIndex);
+    } else {
+      setCurrentIndex((currentIndex) => currentIndex + step);
+    }
+  };
+
+  useEffect(() => {
+    setCurrentImageSrc(`data:image/jpeg;base64,${almanaxImages.content[currentIndex][almanax.content[currentIndex].date]}`);
+  }, [currentIndex]);
 
   return (
     <div className="App" style={{ background: `linear-gradient(45deg, ${palette.vibrant}, ${palette.vibrant + '00'})` }}>
@@ -25,6 +40,7 @@ function App() {
             <img width="32px" src={logoPng} alt="emerald dofus" />
           </picture>
           <span>Dofus Almanax UI</span>
+          {/* <span>{currentIndex}</span> */}
         </div>
         <div className="App-header-time">
           <span>{format(today, 'MMM dd yyyy')}</span>
@@ -32,12 +48,12 @@ function App() {
         </div>
       </header>
       <main className="App-main">
-        <img className="App-main-image" src={itemImage} alt="itemImageAlt" />
-        <Card item={almanax.content[currentIndex]} darkVibrant={palette.darkVibrant} />
+        <img className="App-main-image" src={currentImageSrc} alt={almanax.content[currentIndex].item.name['pt-br']} />
+        <Card item={almanax.content[currentIndex]} imgSrc={currentImageSrc} darkVibrant={palette.darkVibrant} />
       </main>
       <footer className="App-footer">
         <svg
-          // onClick={}
+          onClick={() => navigate(-1)}
           className="hover-grow pointer"
           width="40"
           height="16"
@@ -48,7 +64,7 @@ function App() {
           <path fillRule="evenodd" clipRule="evenodd" d="M18 10.5L40 10.5V5.5L18 5.5L18 0L0 8L18 16V10.5Z" fill={palette.darkVibrant} />
         </svg>
         {currentIndex !== todaysIndex && (
-          <svg className="hover-grow pointer" width="26" height="33" viewBox="0 0 26 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg onClick={() => navigate(0)} className="hover-grow pointer" width="26" height="33" viewBox="0 0 26 33" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
               fillRule="evenodd"
               clipRule="evenodd"
@@ -58,7 +74,7 @@ function App() {
           </svg>
         )}
         <svg
-          // onClick={}
+          onClick={() => navigate(1)}
           className="hover-grow pointer"
           width="40"
           height="16"

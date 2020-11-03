@@ -47,7 +47,7 @@
 .App-main-image {
   position: absolute;
   width: 150%;
-  filter: contrast(0) grayscale(1) blur(3px) drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.3)) opacity(0.2);
+  filter: contrast(0) grayscale(1) blur(3px) drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.3)) opacity(0.3);
 }
 
 .App-footer {
